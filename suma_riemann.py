@@ -1,5 +1,4 @@
 from manim import *
-from scipy.integrate import quad
 
 altura_original = config.pixel_height
 config.pixel_height = config.pixel_width
@@ -14,8 +13,8 @@ class SumaRiemann1(Scene):
 
     def construct(self):
 
-        rejilla = NumberPlane()
-        self.add(rejilla)
+        # rejilla = NumberPlane()
+        # self.add(rejilla)
 
         bienvenida = Text('Alguna vez te has preguntado').move_to(UP * 2).scale(0.5)
         pregunta = Text('¿1 + 1 = 2?').scale(1.2)
@@ -149,7 +148,7 @@ class SumaRiemann1(Scene):
         punto_b2 = punto_b.copy()
         curva1 = curva0.copy()
         area2 = area1.copy()
-        titulo3 = Text('Suma de Riemann').move_to(UP * 2.25).scale(0.85)
+        titulo3 = Text('Suma de Riemann').move_to(UP * 2.4).scale(0.85)
 
         grafica1 = VGroup(subintervalos, punto_a, punto_b, curva0, area1, titulo1)
         grafica2 = VGroup(ax2, punto_a2, punto_b2, curva1, area2, titulo3)
@@ -159,12 +158,16 @@ class SumaRiemann1(Scene):
             self.play(Transform(valor1, valor2), run_time=0.5)
         self.wait(2)
 
-        tendencias = MathTex(r'n \to \infty \hspace{0.2cm} \Delta x_i \to 0'
+        tendencias = MathTex(r'n \to \infty, \hspace{0.2cm} \Delta x_i \to 0'
                              ).move_to(DOWN * 1.5).scale(0.8)
         suma_riemann1 = MathTex(
-            r'A=\lim_{n \to \infty} {\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}}'
+            r'A=',
+            r'\lim_{n \to \infty} {\sum_{i=1}^{n}',
+            r'{f(c_i)',
+            r'\cdot',
+            r'\Delta x_i}}'
         ).move_to(DOWN * 2.5).scale(0.8)
-        self.play(Write(tendencias),Transform(area_base, suma_riemann1))
+        self.play(Write(tendencias), Transform(area_base, suma_riemann1))
         self.wait(2)
 
         definicion_inicial = MathTex(
@@ -176,10 +179,14 @@ class SumaRiemann1(Scene):
         ).move_to(UP * 1).scale(0.9)
 
         area_aprox1 = MathTex(
-            r'S_n=\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}'
+            r'S_n=',
+            r'\sum_{i=1}^{n}',
+            r'{f(c_i)',
+            r'\cdot',
+            r'\Delta x_i}'
         ).move_to(DOWN * 0.25).scale(0.8)
 
-        suma_riemann2 = suma_riemann1.copy().move_to(DOWN * 2).scale(1)
+        suma_riemann2 = suma_riemann1.copy().move_to(DOWN * 0.25).scale(1)
 
         self.play(Transform(grafica1, definicion_inicial),
                   Transform(titulo1, titulo3), run_time=0.8)
@@ -189,5 +196,62 @@ class SumaRiemann1(Scene):
         self.play(Write(area_aprox1))
         self.wait(2)
         self.play(Transform(area_base, suma_riemann2),
-                  Transform(tendencias, suma_riemann2))
+                  Transform(tendencias, suma_riemann2),
+                  Transform(area_aprox1, suma_riemann2))
         self.wait(3)
+
+        integral = MathTex(
+            r'A=', r'\int_{a}^{b}', r'f(x)', r'\,dx'
+        ).move_to(UP * 1.5).scale(0.9)
+        titulo_integral = Text('La integral').move_to(UP * 3)
+
+        self.play(Uncreate(grafica1),
+                  Uncreate(definicion_media))
+        self.wait(1)
+        self.play(Write(titulo_integral))
+        self.wait(2)
+
+        self.play(Transform(suma_riemann2[1], integral[1]))
+        self.wait(2)
+        self.play(Transform(suma_riemann2[2], integral[2]))
+        self.wait(2)
+        self.play(Transform(suma_riemann2[4], integral[3]))
+        self.wait(3)
+        self.play(Transform(suma_riemann2[0], integral[0]))
+        self.wait(2)
+        self.play(Uncreate(area_base),
+                  Uncreate(tendencias),
+                  Uncreate(area_aprox1))
+        self.wait(1)
+
+        ax2 = Axes(
+            x_range=[-1, 8, 1],
+            y_range=[0, 6, 1],
+            x_length=4.3,
+            y_length=3.4,
+            axis_config={"include_tip": True}
+        )
+        punto_a3 = MathTex(r'a').move_to(ax2.coords_to_point(a, -0.6))
+        punto_b3 = MathTex(r'b').move_to(ax2.coords_to_point(b, -0.6))
+        curva2 = ax.plot(funcion,
+                         color=BLUE,
+                         x_range=[0, 7.5])
+        area3 = ax.get_area(curva2, x_range=(0, 7), opacity=0.8)
+        grafica0 = VGroup(ax2, punto_a3, punto_b3, curva2, area3
+                          ).move_to(DOWN * 1.2).scale(0.85)
+
+        self.play(Write(grafica0), run_time=2)
+        self.wait(3)
+
+        rect1 = SurroundingRectangle(integral, color=RED)
+        rect2 = SurroundingRectangle(grafica0, color=RED)
+        self.play(Write(rect1), Write(rect2),  run_time=1.5)
+        self.wait(3)
+
+        self.play(Uncreate(titulo_integral),
+                  Uncreate(suma_riemann2),
+                  Uncreate(grafica0),
+                  FadeOut(rect1),
+                  FadeOut(rect2),
+                  run_time=2)
+        self.wait(1)
