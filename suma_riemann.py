@@ -1,5 +1,5 @@
 from manim import *
-
+from scipy.integrate import quad
 
 altura_original = config.pixel_height
 config.pixel_height = config.pixel_width
@@ -71,22 +71,69 @@ class SumaRiemann1(Scene):
         self.play(Transform(subintervalos, funcion_muestra))
         self.wait(2)
 
-        azul = '#001D6E'
+        rojo = '#B20600'
+        a = 0
+        b = 7
         ax = Axes(
             x_range=[-1, 8, 1],
-            y_range=[-1, 6, 1],
+            y_range=[0, 6, 1],
             x_length=4.3,
             y_length=3.4,
             axis_config={"include_tip": True}
         )
-        punto_a = MathTex(r'a').move_to(ax.coords_to_point(1, -0.9))
-        punto_b = MathTex(r'b').move_to(ax.coords_to_point(6, -0.9))
+        punto_a = MathTex(r'a').move_to(ax.coords_to_point(a, -0.6))
+        punto_b = MathTex(r'b').move_to(ax.coords_to_point(b, -0.6))
         self.play(Uncreate(integral1), Uncreate(integral2))
         self.play(Transform(subintervalos, ax))
         self.play(Write(punto_a), Write(punto_b), run_time=1.5)
         self.wait(2)
 
-        curva0 = ax.plot(lambda x: x**(1/3) + 0.5*x**(1/2) + 2,
+        funcion = lambda x: x**(1/3) + 0.5*x**(1/2) + 2
+        curva0 = ax.plot(funcion,
                          color=BLUE, x_range=[0, 7.5])
+        area = ax.get_area(curva0, x_range=(0, 7), color=rojo, opacity=0.5)
+        # area_valor = quad(funcion, 0, 7)
+
+        # grafico = VGroup(ax, curva0)  # area
+
         self.play(Write(curva0), run_time=1.5)
         self.wait(2)
+        # self.play(Write(area))
+        # self.wait(2)
+
+        subdivisions = [2, 5, 10, 20, 50, 100]
+        prev_rectangles = None
+
+        for n in subdivisions:
+            # Calcular ancho de cada rectángulo
+            dx = (b - a) / n
+
+            # Crear rectángulos de Riemann (muestreo por la derecha)
+            rectangles = ax.get_riemann_rectangles(
+                curva0,
+                x_range=[a, b],
+                dx=dx,
+                # input_sample_type="right",
+                # stroke_width=0.5,
+                # color=rojo,
+                fill_opacity=0.8
+                )
+
+            if prev_rectangles:
+                self.play(
+                    Transform(prev_rectangles, rectangles),
+                )
+                self.wait(1)
+            else:
+                self.play(
+                    Write(rectangles)
+                )
+                self.wait(1)
+                prev_rectangles = rectangles
+
+        area = ax.get_area(curva0, x_range=(0, 7), opacity=0.8
+                           )
+        self.play(Uncreate(prev_rectangles), Write(area))
+        self.wait(2)
+
+
