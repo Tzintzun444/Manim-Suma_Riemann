@@ -106,7 +106,7 @@ class SumaRiemann1(Scene):
         prev_rectangles = None
         area_base = MathTex(r'A_{i}= f(c_i) \cdot \Delta x_i').move_to(DOWN * 3)
         area_aprox = MathTex(r'A\approx S_n=\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}'
-                             ).move_to(DOWN * 2.5).scale(0.8)
+                             ).move_to(DOWN * 3).scale(0.8)
 
         for n in subdivisions:
             # Calcular ancho de cada rectángulo
@@ -149,17 +149,45 @@ class SumaRiemann1(Scene):
         punto_b2 = punto_b.copy()
         curva1 = curva0.copy()
         area2 = area1.copy()
-        titulo3 = titulo2.copy()
+        titulo3 = Text('Suma de Riemann').move_to(UP * 2.25).scale(0.85)
 
-        grafica1 = [subintervalos, punto_a, punto_b, curva0, area1, titulo1]
+        grafica1 = VGroup(subintervalos, punto_a, punto_b, curva0, area1, titulo1)
         grafica2 = VGroup(ax2, punto_a2, punto_b2, curva1, area2, titulo3)
         grafica2.shift(UP * 0.75).scale(0.9)
 
         for valor1, valor2 in zip(grafica1, grafica2):
             self.play(Transform(valor1, valor2), run_time=0.5)
-
-        suma_riemann = MathTex(
-            r'A=\lim_{n \to \infty} {\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}}'
-        ).move_to(DOWN * 2).scale(0.8)
-        self.play(Transform(area_base, suma_riemann))
         self.wait(2)
+
+        tendencias = MathTex(r'n \to \infty \hspace{0.2cm} \Delta x_i \to 0'
+                             ).move_to(DOWN * 1.5).scale(0.8)
+        suma_riemann1 = MathTex(
+            r'A=\lim_{n \to \infty} {\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}}'
+        ).move_to(DOWN * 2.5).scale(0.8)
+        self.play(Write(tendencias),Transform(area_base, suma_riemann1))
+        self.wait(2)
+
+        definicion_inicial = MathTex(
+            r'f(x):[a,b] \hspace{0.1cm} P = \{x_1,x_2,...,x_n\}'
+        ).move_to(UP * 2).scale(0.6)
+
+        definicion_media = MathTex(
+            r'c_i \in [x_{i-1}, x_i]'
+        ).move_to(UP * 1).scale(0.9)
+
+        area_aprox1 = MathTex(
+            r'S_n=\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}'
+        ).move_to(DOWN * 0.25).scale(0.8)
+
+        suma_riemann2 = suma_riemann1.copy().move_to(DOWN * 2).scale(1)
+
+        self.play(Transform(grafica1, definicion_inicial),
+                  Transform(titulo1, titulo3), run_time=0.8)
+        self.wait(2)
+        self.play(Write(definicion_media))
+        self.wait(2)
+        self.play(Write(area_aprox1))
+        self.wait(2)
+        self.play(Transform(area_base, suma_riemann2),
+                  Transform(tendencias, suma_riemann2))
+        self.wait(3)
