@@ -38,7 +38,7 @@ class SumaRiemann1(Scene):
         self.play(Write(titulo1), Write(integral1))
         self.wait(3)
 
-        datos1 = MathTex(f'f:[a,b]').move_to(UP + LEFT * 1.25).scale(0.75)
+        datos1 = MathTex(r'f:[a,b]').move_to(UP + LEFT * 1.25).scale(0.75)
         datos2 = MathTex(r'f(a) \to f(b)').move_to(UP + RIGHT).scale(0.75)
 
         self.play(Transform(integral1, datos1), Transform(integral2, datos2),
@@ -71,7 +71,7 @@ class SumaRiemann1(Scene):
         self.play(Transform(subintervalos, funcion_muestra))
         self.wait(2)
 
-        rojo = '#B20600'
+        # rojo = '#B20600'
         a = 0
         b = 7
         ax = Axes(
@@ -83,6 +83,7 @@ class SumaRiemann1(Scene):
         )
         punto_a = MathTex(r'a').move_to(ax.coords_to_point(a, -0.6))
         punto_b = MathTex(r'b').move_to(ax.coords_to_point(b, -0.6))
+
         self.play(Uncreate(integral1), Uncreate(integral2))
         self.play(Transform(subintervalos, ax))
         self.play(Write(punto_a), Write(punto_b), run_time=1.5)
@@ -91,18 +92,21 @@ class SumaRiemann1(Scene):
         funcion = lambda x: x**(1/3) + 0.5*x**(1/2) + 2
         curva0 = ax.plot(funcion,
                          color=BLUE, x_range=[0, 7.5])
-        area = ax.get_area(curva0, x_range=(0, 7), color=rojo, opacity=0.5)
+        # area = ax.get_area(curva0, x_range=(0, 7), color=rojo, opacity=0.5)
         # area_valor = quad(funcion, 0, 7)
 
         # grafico = VGroup(ax, curva0)  # area
 
         self.play(Write(curva0), run_time=1.5)
-        self.wait(2)
+        self.wait(1)
         # self.play(Write(area))
         # self.wait(2)
 
         subdivisions = [2, 5, 10, 20, 50, 100]
         prev_rectangles = None
+        area_base = MathTex(r'A_{i}= f(c_i) \cdot \Delta x_i').move_to(DOWN * 3)
+        area_aprox = MathTex(r'A\approx S_n=\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}'
+                             ).move_to(DOWN * 2.5).scale(0.8)
 
         for n in subdivisions:
             # Calcular ancho de cada rectángulo
@@ -122,18 +126,40 @@ class SumaRiemann1(Scene):
             if prev_rectangles:
                 self.play(
                     Transform(prev_rectangles, rectangles),
+                    run_time=0.8
                 )
+                self.play(Transform(area_base, area_aprox))
                 self.wait(1)
             else:
                 self.play(
-                    Write(rectangles)
+                    Write(rectangles),
+                    Write(area_base),
+                    run_time=1
                 )
                 self.wait(1)
                 prev_rectangles = rectangles
 
-        area = ax.get_area(curva0, x_range=(0, 7), opacity=0.8
-                           )
-        self.play(Uncreate(prev_rectangles), Write(area))
+        self.wait(2)
+        area1 = ax.get_area(curva0, x_range=(0, 7), opacity=0.8)
+        self.play(Uncreate(prev_rectangles), Write(area1), run_time=0.6)
         self.wait(2)
 
+        ax2 = ax.copy()
+        punto_a2 = punto_a.copy()
+        punto_b2 = punto_b.copy()
+        curva1 = curva0.copy()
+        area2 = area1.copy()
+        titulo3 = titulo2.copy()
 
+        grafica1 = [subintervalos, punto_a, punto_b, curva0, area1, titulo1]
+        grafica2 = VGroup(ax2, punto_a2, punto_b2, curva1, area2, titulo3)
+        grafica2.shift(UP * 0.75).scale(0.9)
+
+        for valor1, valor2 in zip(grafica1, grafica2):
+            self.play(Transform(valor1, valor2), run_time=0.5)
+
+        suma_riemann = MathTex(
+            r'A=\lim_{n \to \infty} {\sum_{i=1}^{n}{f(c_i) \cdot \Delta x_i}}'
+        ).move_to(DOWN * 2).scale(0.8)
+        self.play(Transform(area_base, suma_riemann))
+        self.wait(2)
