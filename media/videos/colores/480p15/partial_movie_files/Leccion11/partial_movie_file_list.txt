@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/1185818338_1545180657_223132457.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/624642324_2552855209_1971961513.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/624642324_192173516_3748989872.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/624642324_2552855209_1144807605.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/624642324_2895696304_2612192626.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/colores/480p15/partial_movie_files/Leccion11/624642324_2552855209_3178677479.mp4'

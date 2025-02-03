@@ -1,0 +1,9 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/2421950144_1702526093_223132457.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_4217992463_4232461216.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_2542555115_2918355387.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_2552855209_3291994367.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_1408336665_349732997.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_2552855209_1596449156.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_2269543895_2790662017.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/matematicas/1080p60/partial_movie_files/Leccion15/3318103782_2552855209_1630693057.mp4'

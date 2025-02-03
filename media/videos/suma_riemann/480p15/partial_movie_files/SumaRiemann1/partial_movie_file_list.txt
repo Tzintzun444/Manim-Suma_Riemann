@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/suma_riemann/480p15/partial_movie_files/SumaRiemann1/1185818338_2577300693_2720366851.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/suma_riemann/480p15/partial_movie_files/SumaRiemann1/624642324_2844360058_1692227351.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/suma_riemann/480p15/partial_movie_files/SumaRiemann1/624642324_2182903435_323715957.mp4'
+file 'file:C:/Users/alfre/Documentos/Cursos Desarrollo Web/Python/manim/inicio/manim/media/videos/suma_riemann/480p15/partial_movie_files/SumaRiemann1/624642324_2844360058_2768145164.mp4'
